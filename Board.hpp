@@ -26,7 +26,7 @@ Board(std::string piece[]);
 //REQUIRES: peice moves in its correct pathing
 //also takes peice if required
 void move_peice(std::string move);
-//we can get the object of peive by using the array and getting the element 
+//we can get the object of peive by using the board array and getting the element 
 
 
 private:
@@ -35,6 +35,11 @@ std::array<Piece, 64> board;
 
 
 };
+
+//EFFECT: takes in chess notation as imput and returns a position in array
+int notation_to_position(std::string pos, bool &takes, Value &value);
+
+
 
 
 
