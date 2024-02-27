@@ -24,14 +24,28 @@ void Board::move_peice(std::string move){
 
 
 //EFFECT: takes in chess notation as imput and returns a position in array
-int notation_to_position(std::string pos, bool &takes, int &value){
-    //capital letters mean peice
+//capital letters denotes a peice
     //lower case is a pawn
-    value  = stoi(pos.begin());
+    //example notaitons: (case sensitive)
+    //  e4 pawn
+    //  Bg2 bishop
+    //  Nf3 knight 
+    //  Kxe3 king takes pawn (we have to dedce which king, but we can if we know if its white or black turn)
+    //  Qd5+ queen checks king
+int notation_converter(std::string pos, bool &takes, int &value){
+    
+    //removes all letter and only leaves number which is final position
+    int end_pos = stoi(pos);
 
 
-    //x means takes
-
-    return 
+    return ; 
 }
 
+//I j copy pasted ts idk why it got so many const declarations like bro we get it we cant change u
+constexpr const char *const PIECE_NAMES[] = {
+  "N",   // Knight
+  "B", // Bishop
+  "R",  // Rook
+  "Q",  // Queen
+  "K",   // King
+};
