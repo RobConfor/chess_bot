@@ -35,6 +35,8 @@ void Board::move_peice(std::string move){
 int notation_converter(std::string pos, bool &takes, int &value){
 
     //is taking a piece
+    //I dont think takes matters, only reason it does is we can keep track of which peices are deleted 
+    //since when we pet a peice to a new position, it automatically removes the previously placed piece
     if(pos.find('x') != std::string::npos){
         takes = true;
     } else {
@@ -58,14 +60,37 @@ int notation_converter(std::string pos, bool &takes, int &value){
 
     }
 
+    //checks other pieces
+    for(int i = 0; i < 4; ++i){
+        if(pos[0] == PIECE_NAMES[i]){
+            
+        }
+    }
+
+    //this just changes sytnax since position will be in different place in string array
+    if(takes){
+        //we want pos[2] and pos[3]
+
+
+    } else {
+        //we want pos[1] and pos[2]
+        
+
+    }
+
 
     return ;
 }
 
-//I j copy pasted ts idk why it got so many const declarations like bro we get it we cant change u
-constexpr const char *const PIECE_NAMES[] = {
-  "N",   // Knight
-  "B", // Bishop
-  "R",  // Rook
-  "Q",  // Queen
+
+int string_to_pos(std::string){
+
+    return ;
+}
+
+const char PIECE_NAMES[] = {
+  'N',   // Knight
+  'B', // Bishop
+  'R',  // Rook
+  'Q'  // Queen
 };
