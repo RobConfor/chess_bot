@@ -3,6 +3,20 @@
 
 #include <string>
 
+enum Value {
+    PAWN = 1,
+    KNIGHT = 3,
+    BISHOP = 3,
+    ROOK = 5,
+    QUEEN = 9,
+    KING = 500,
+};
+
+enum Rank {
+   WHITE = 1,
+   BLACK = 0,
+};
+
 class Piece {
     public:
 
@@ -18,19 +32,7 @@ class Piece {
 };
 
 
-enum Value {
-    PAWN = 1,
-    KNIGHT = 3,
-    BISHOP = 3,
-    ROOK = 5,
-    QUEEN = 9,
-    KING = 500,
-};
 
-enum Rank {
-   WHITE = 1,
-   BLACK = 0,
-};
 
 
 

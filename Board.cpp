@@ -69,7 +69,12 @@ void Board::move_peice(std::string move){
 
 }
 
-
+const char PIECE_NAMES[] = {
+  'N',   // Knight
+  'B', // Bishop
+  'R',  // Rook
+  'Q'  // Queen
+};
 
 //EFFECT: takes in chess notation as imput and returns a position in array
 //capital letters denotes a peice
@@ -137,9 +142,4 @@ int string_to_pos(std::string){
     return ;
 }
 
-const char PIECE_NAMES[] = {
-  'N',   // Knight
-  'B', // Bishop
-  'R',  // Rook
-  'Q'  // Queen
-};
+

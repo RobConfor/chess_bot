@@ -39,7 +39,4 @@ array<Piece, 64> board;
 int notation_to_position(string pos, bool &takes, Value &value);
 
 
-
-
-
 #endif
