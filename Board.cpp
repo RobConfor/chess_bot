@@ -1,8 +1,8 @@
 #include "Board.hpp"
 
-    //initializes basic board with all pieces on starting squares
-    //we will assume we are playing 
-Board::Board(){
+//initializes basic board with all pieces on starting squares
+//we will assume we are playing 
+Board::Board() {
 
     //probaably a better way to do this but im lazy
     Piece b_rook1 = Piece(ROOK, BLACK);
