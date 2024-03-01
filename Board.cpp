@@ -4,6 +4,54 @@
     //we will assume we are playing 
 Board::Board(){
 
+    //probaably a better way to do this but im lazy
+    Piece b_rook1 = Piece(ROOK, BLACK);
+    Piece b_bishop1 = Piece(BISHOP, BLACK);
+    Piece b_knight1 = Piece(KNIGHT, BLACK);
+    Piece b_rook2 = Piece(ROOK, BLACK);
+    Piece b_bishop2 = Piece(BISHOP, BLACK);
+    Piece b_knight2 = Piece(KNIGHT, BLACK);
+
+    Piece b_queen = Piece(QUEEN, BLACK);
+    Piece b_king = Piece(KING, BLACK);
+    
+    board[0] = b_rook1;
+    board[1] = b_knight1;
+    board[2] = b_bishop1; 
+    board[3] = b_queen;
+    board[4] = b_king;
+    board[5] = b_bishop2;
+    board[6] = b_knight2;
+    board[7] = b_rook2;
+
+    for(int i = 8; i < 16; ++i){
+        Piece pawn = Piece(BLACK);
+        board[i] = pawn;
+    }
+
+    for(int i = 47; i < 56; ++i){
+        Piece pawn = Piece(WHITE);
+        board[i] = pawn;
+    }
+
+    Piece w_rook1 = Piece(ROOK, WHITE);
+    Piece w_bishop1 = Piece(BISHOP, WHITE);
+    Piece w_knight1 = Piece(KNIGHT, WHITE);
+    Piece w_rook2 = Piece(ROOK, WHITE);
+    Piece w_bishop2 = Piece(BISHOP, WHITE);
+    Piece w_knight2 = Piece(KNIGHT, WHITE);
+
+    Piece w_queen = Piece(QUEEN, WHITE);
+    Piece w_king = Piece(KING, WHITE);
+
+    board[56] = w_rook1;
+    board[57] = w_knight1;
+    board[58] = w_bishop1; 
+    board[59] = w_queen;
+    board[60] = w_king;
+    board[61] = w_bishop2;
+    board[62] = w_knight2;
+    board[63] = w_rook2;
 }
 
 
@@ -12,7 +60,7 @@ Board::Board(){
 Board::Board(std::string piece[]){
 
 }
-    
+
 
 //REQUIRES: move is given in chess notation
 //REQUIRES: peice moves in its correct pathing
@@ -46,7 +94,7 @@ int notation_converter(std::string pos, bool &takes, int &value){
     
     if(islower(pos[0])){
         //we know it is a pawn move
-        value = 1;
+        value = PAWN;
 
         //nested yes ik yuck
         if(takes == false){
@@ -63,6 +111,7 @@ int notation_converter(std::string pos, bool &takes, int &value){
     //checks other pieces
     for(int i = 0; i < 4; ++i){
         if(pos[0] == PIECE_NAMES[i]){
+            value = PIECE_NAMES[i];
             
         }
     }

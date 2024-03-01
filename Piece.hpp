@@ -7,12 +7,13 @@ class Piece {
     public:
 
     //base will be a pawn
-    Piece();
+    Piece(Rank rank);
 
-    Piece(Value name);
+    Piece(Value name, Rank rank);
 
     private:
     Value value;
+    Rank rank;
 
 };
 
@@ -25,6 +26,12 @@ enum Value {
     QUEEN = 9,
     KING = 500,
 };
+
+enum Rank {
+   WHITE = 1,
+   BLACK = 0,
+};
+
 
 
 #endif

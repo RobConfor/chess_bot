@@ -15,7 +15,6 @@ class Board {
 public:
 
 
-
 //initializes basic board with all pieces on starting squares
 //we will assume we are playing 
 Board();
