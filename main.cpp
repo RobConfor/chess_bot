@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Piece.hpp"
 #include "Board.hpp"
+#include "Board.cpp"
+#include "Piece.cpp"
 
 using namespace std;
 
