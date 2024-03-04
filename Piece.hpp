@@ -4,6 +4,7 @@
 #include <string>
 
 enum Value {
+    EMPTY = 0, //empty square
     PAWN = 1,
     KNIGHT = 3,
     BISHOP = 3,
@@ -12,28 +13,31 @@ enum Value {
     KING = 500,
 };
 
-enum Rank {
+enum Color {
     BLACK = 0,
     WHITE = 1,
 };
 
 class Piece {
     public:
-    
+
+    //empty square
+    Piece();
+
     //pawn
-    Piece(Rank rank);
+    Piece(Color color);
 
-    Piece(Value name, Rank rank);
+    Piece(Value name, Color color);
 
+    Value get_value();
+
+    Color get_color();
 
     private:
     Value value;
-    Rank rank;
+    Color color;
 
 };
-
-
-
 
 
 
