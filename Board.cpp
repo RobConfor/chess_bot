@@ -1,5 +1,60 @@
-#include "Board.hpp"
+#include "Piece.cpp"
+#include <iostream>
+#include <cstdlib>
+#include <cassert>
+#include <array>
+#include <string>
+#include <vector>
+#include <cmath>
 
+using namespace std;
+
+class Board {
+    public:
+    //initializes basic board with all pieces on starting squares
+    //we will assume we are playing 
+    Board();
+
+    //a particular initilizer that can set up chess puzzles
+    //takes in piece placesment as an array in chess notation
+    Board(string piece[], int length, int start);
+
+    //returns the peice at a spesific square in index notation
+    Piece get_piece(int index);
+
+    //returns peice in given chess notation pos
+    Piece get_piece(string pos);
+
+    //find peice given color and type of piece
+    Piece find_peice(Color Color, Value value);
+
+    void take_peice(string pos);
+
+
+    //REQUIRES: move is given in chess notation
+    //REQUIRES: peice moves in its correct pathing
+    //also takes peice if required
+    void move_peice(string move);
+    //we can get the object of piece by using the board array and getting the element 
+
+    //prints whole board
+    void to_string();
+
+    private:
+    array<Piece, 64> board;
+
+    //tells us which peices are taken
+    vector<Piece> taken;
+
+    //counts whos turn it is (so we know if it is white or black)
+    int turn;
+
+};
+
+//EFFECT: takes in chess notation as imput and returns a position in array
+int notation_converter(string pos, bool &takes, Value &value);
+
+int string_to_pos(string);
 
 //initializes basic board with all pieces on starting squares
 //we will assume we are playing 
@@ -29,12 +84,12 @@ Board::Board(){
         this->board[i] = pawn;
     }
 
-    for(int i = 16; i < 47; ++i){
+    for(int i = 16; i < 48; ++i){
         Piece empty_square = Piece();
         this->board[i] = empty_square;
     }
 
-    for(int i = 47; i < 56; ++i){
+    for(int i = 48; i < 56; ++i){
         Piece pawn = Piece(WHITE);
         this->board[i] = pawn;
     }
@@ -65,9 +120,9 @@ Board::Board(){
 //a particular initilizer that can set up chess puzzles
 //takes in peice placesment as an array in chess notation
 //idk how to tell if it is a black peice or white
-Board::Board(std::string piece[], int length, int start){
+Board::Board(string piece[], int length, int start){
 
-    for(int i = 0; i < BOARD_SIZE; ++i){
+    for(int i = 0; i < 64; ++i){
         Piece empty_square = Piece();
         board[i] = empty_square;
     }
@@ -95,7 +150,7 @@ Piece Board::get_piece(int index){
 }
 
 //returns peice in given chess notation pos
-Piece Board::get_piece(std::string pos){
+Piece Board::get_piece(string pos){
     return this->board[string_to_pos(pos)];
 }
 
@@ -103,7 +158,7 @@ Piece Board::get_piece(std::string pos){
 //REQUIRES: move is given in chess notation
 //REQUIRES: peice moves in its correct pathing
 //also takes peice if required
-void Board::move_peice(std::string move){
+void Board::move_peice(string move){
 
     //not done yet
     bool takes = false;
@@ -141,12 +196,12 @@ const char PIECE_NAMES[] = {
     //  Nf3 knight 
     //  Kxe3 king takes pawn (we have to dedce which king, but we can if we know if its white or black turn)
     //  Qd5+ queen checks king
-int notation_converter(std::string pos, bool &takes, Value &value){
+int notation_converter(string pos, bool &takes, Value &value){
 
     //is taking a piece
     //I dont think takes matters, only reason it does is we can keep track of which peices are deleted 
     //since when we pet a peice to a new position, it automatically removes the previously placed piece
-    if(pos.find('x') != std::string::npos){
+    if(pos.find('x') != string::npos){
         takes = true;
         
     } else {
@@ -162,10 +217,12 @@ int notation_converter(std::string pos, bool &takes, Value &value){
 
             //this is not correct
             //stoi removes all letters and leaves just numbers
-            return stoi(pos);
+            string new_pos = to_string(pos[0]) + pos[1];
+            return string_to_pos(new_pos);
         }
 
-        return ;
+        string new_pos = to_string(pos[2]) + pos[3];
+        return string_to_pos(new_pos);
 
     }
 
@@ -175,11 +232,11 @@ int notation_converter(std::string pos, bool &takes, Value &value){
     if(takes){
         //have to convert to string so we can add them (idk)
         //we want pos[2] and pos[3]
-        std::string new_pos = std::to_string(pos[2]) + pos[3];
+        string new_pos = to_string(pos[2]) + pos[3];
         return string_to_pos(new_pos);
     } else {
         //we want pos[1] and pos[2]
-        std::string new_pos = std::to_string(pos[1]) + pos[2];
+        string new_pos = to_string(pos[1]) + pos[2];
         return string_to_pos(new_pos);
     }
 
@@ -189,25 +246,25 @@ int notation_converter(std::string pos, bool &takes, Value &value){
 
 //ghost erorrs i think idk
 void Board::to_string(){
-    for(int i = 0; i < BOARD_SIZE; ++i){
-
-        std::cout << this->board[i] << " ";
-        if(i % 8 == 0){
-            std::cout << '\n';
+    for(int i = 0; i < 64; ++i){
+        cout << this->board[i] << " ";
+        if((i + 1) % 8 == 0 && i != 0){
+            cout << '\n';
         }
     }
 
 }
 
 Piece Board::find_peice(Color color, Value value){
-    for(int i = 0; i < BOARD_SIZE; ++i){
+    for(int i = 0; i < 64; ++i){
         if(this->board[i].get_color() == color && this->board[i].get_value() == value){
             return this->board[i];
         }
     }
 
-    //peice was not found so taken?
-    return ;
+    //peice was not found it has been taken
+    Piece pawn = Piece(WHITE);
+    return pawn;
 }
 
 
@@ -223,14 +280,13 @@ const char GRID_POS[] = {
   'h'
 };
 
-
 //REQUIRES: input is in form of just the grid pos. 
 //EX:
     // a8 = 0
     // b6 = 17
     // h1 = 63
 // returns grid pos in board array
-int string_to_pos(std::string pos){
+int string_to_pos(string pos){
 
     int row = 0;
     int col = 0;
