@@ -53,11 +53,6 @@ class Piece {
     Color color;
 };
 
-std::ostream &operator<<(std::ostream &os, Piece &piece);
-
-
-
-
 std::ostream &operator<<(std::ostream &os, Piece &piece){
     char name; 
     Value value = piece.get_value();
