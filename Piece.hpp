@@ -36,7 +36,6 @@ class Piece {
     private:
     Value value;
     Color color;
-
 };
 
 std::ostream &operator<<(std::ostream &os, Piece &piece){

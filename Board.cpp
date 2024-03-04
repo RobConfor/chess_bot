@@ -4,7 +4,6 @@
 //initializes basic board with all pieces on starting squares
 //we will assume we are playing 
 Board::Board(){
-
     //probaably a better way to do this but im lazy
     Piece b_rook1 = Piece(ROOK, BLACK);
     Piece b_bishop1 = Piece(BISHOP, BLACK);
@@ -16,28 +15,28 @@ Board::Board(){
     Piece b_queen = Piece(QUEEN, BLACK);
     Piece b_king = Piece(KING, BLACK);
     
-    board[0] = b_rook1;
-    board[1] = b_knight1;
-    board[2] = b_bishop1; 
-    board[3] = b_queen;
-    board[4] = b_king;
-    board[5] = b_bishop2;
-    board[6] = b_knight2;
-    board[7] = b_rook2;
+    this->board[0] = b_rook1;
+    this->board[1] = b_knight1;
+    this->board[2] = b_bishop1; 
+    this->board[3] = b_queen;
+    this->board[4] = b_king;
+    this->board[5] = b_bishop2;
+    this->board[6] = b_knight2;
+    this->board[7] = b_rook2;
 
     for(int i = 8; i < 16; ++i){
         Piece pawn = Piece(BLACK);
-        board[i] = pawn;
+        this->board[i] = pawn;
     }
 
     for(int i = 16; i < 47; ++i){
         Piece empty_square = Piece();
-        board[i] = empty_square;
+        this->board[i] = empty_square;
     }
 
     for(int i = 47; i < 56; ++i){
         Piece pawn = Piece(WHITE);
-        board[i] = pawn;
+        this->board[i] = pawn;
     }
 
     Piece w_rook1 = Piece(ROOK, WHITE);
@@ -50,14 +49,14 @@ Board::Board(){
     Piece w_queen = Piece(QUEEN, WHITE);
     Piece w_king = Piece(KING, WHITE);
 
-    board[56] = w_rook1;
-    board[57] = w_knight1;
-    board[58] = w_bishop1; 
-    board[59] = w_queen;
-    board[60] = w_king;
-    board[61] = w_bishop2;
-    board[62] = w_knight2;
-    board[63] = w_rook2;
+    this->board[56] = w_rook1;
+    this->board[57] = w_knight1;
+    this->board[58] = w_bishop1; 
+    this->board[59] = w_queen;
+    this->board[60] = w_king;
+    this->board[61] = w_bishop2;
+    this->board[62] = w_knight2;
+    this->board[63] = w_rook2;
 
     this->turn = 0;
 }
@@ -191,7 +190,7 @@ int notation_converter(std::string pos, bool &takes, Value &value){
 //ghost erorrs i think idk
 void Board::to_string(){
     for(int i = 0; i < BOARD_SIZE; ++i){
-        
+
         std::cout << this->board[i] << " ";
         if(i % 8 == 0){
             std::cout << '\n';

@@ -10,5 +10,10 @@ using namespace std;
 
 int main() {
     cout << "Hello World" << endl;
+
+    Board game = new Board();
+
+    cout << game.to_string();
+
     return 0;
 }

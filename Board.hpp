@@ -14,7 +14,7 @@
 using namespace std;
 
 class Board {
-public:
+    public:
     //initializes basic board with all pieces on starting squares
     //we will assume we are playing 
     Board();
@@ -45,7 +45,6 @@ public:
     void to_string();
 
     private:
-
     array<Piece, 64> board;
 
     //tells us which peices are taken
