@@ -39,6 +39,8 @@ class Piece {
 
 };
 
+std::ostream &operator<<(std::ostream &os, Piece &piece){
+
 
 
 #endif

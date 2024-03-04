@@ -41,7 +41,8 @@ public:
     void move_peice(string move);
     //we can get the object of piece by using the board array and getting the element 
 
-
+    //prints whole board
+    void to_string();
 
     private:
 
@@ -59,8 +60,6 @@ public:
 
 //EFFECT: takes in chess notation as imput and returns a position in array
 int notation_to_position(string pos, bool &takes, Value &value);
-
-std::ostream &operator<<(std::ostream &os, const Piece &piece);
 
 int string_to_pos(std::string);
 

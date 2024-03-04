@@ -1,5 +1,6 @@
 #include "Board.hpp"
 
+
 //initializes basic board with all pieces on starting squares
 //we will assume we are playing 
 Board::Board(){
@@ -187,15 +188,16 @@ int notation_converter(std::string pos, bool &takes, Value &value){
     return 0;
 }
 
-//prints the whole board hopefully
-std::ostream &operator<<(std::ostream &os, Board &board){
-    for(int i = 0; i < 64; ++i){
-        os << board.get_piece(i) << " ";
+//ghost erorrs i think idk
+void Board::to_string(){
+    for(int i = 0; i < BOARD_SIZE; ++i){
+        
+        std::cout << this->board[i] << " ";
         if(i % 8 == 0){
-            os << '\n';
+            std::cout << '\n';
         }
     }
-    return os;
+
 }
 
 Piece Board::find_peice(Color color, Value value){
