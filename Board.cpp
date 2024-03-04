@@ -57,8 +57,27 @@ Board::Board() {
 
 //a particular initilizer that can set up chess puzzles
 //takes in peice placesment as an array in chess notation
-Board::Board(std::string piece[]){
+//idk how to tell if it is a black peice or white
+Board::Board(std::string piece[], int length){
+    for(int i = 0; i < length; ++i){
+        
+        //this is stupid and doesnt work but also idk how to know if peice r white or black
+        Value v = PAWN;
+        bool take = false;
+        int l = notation_converter(piece[i], take, v);
+        Piece temp = Piece(v, WHITE);
+        board[string_to_pos(piece[i])] = temp;
+    }
+}
 
+//returns the peice at a spesific square in index notation
+Piece Board::get_piece(int index){
+    return this->board[index];
+}
+
+//returns peice in given chess notation pos
+Piece Board::get_piece(std::string pos){
+    return this->board[string_to_pos(pos)];
 }
 
 
@@ -85,7 +104,7 @@ const char PIECE_NAMES[] = {
     //  Nf3 knight 
     //  Kxe3 king takes pawn (we have to dedce which king, but we can if we know if its white or black turn)
     //  Qd5+ queen checks king
-int notation_converter(std::string pos, bool &takes, int &value){
+int notation_converter(std::string pos, bool &takes, Value &value){
 
     //is taking a piece
     //I dont think takes matters, only reason it does is we can keep track of which peices are deleted 
@@ -134,6 +153,17 @@ int notation_converter(std::string pos, bool &takes, int &value){
 
 
     return ;
+}
+
+
+std::ostream &operator<<(std::ostream &os, Board &board){
+    for(int i = 0; i < 64; ++i){
+        os << board.get_piece(i) << " ";
+        if(i % 8 == 0){
+            os << '\n';
+        }
+    }
+    return os;
 }
 
 

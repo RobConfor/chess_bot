@@ -13,17 +13,18 @@ enum Value {
 };
 
 enum Rank {
-   WHITE = 1,
-   BLACK = 0,
+    BLACK = 0,
+    WHITE = 1,
 };
 
 class Piece {
     public:
-
-    //base will be a pawn
+    
+    //pawn
     Piece(Rank rank);
 
     Piece(Value name, Rank rank);
+
 
     private:
     Value value;
