@@ -1,11 +1,7 @@
 #include "Piece.cpp"
-#include <iostream>
-#include <cstdlib>
-#include <cassert>
-#include <array>
-#include <string>
-#include <vector>
-#include <cmath>
+
+//this coesnt compile on its own since we didnt include libraries
+
 
 using namespace std;
 
@@ -28,7 +24,18 @@ class Board {
     //find peice given color and type of piece
     Piece find_peice(Color Color, Value value);
 
+    //removes peice for baord array and adds to taken vector
     void take_peice(string pos);
+
+    //returns the board array
+    array<Piece> get_board();
+
+    //returns taken pieces
+    vector<Piece> get_taken();
+
+    //promotes a pawn to inputed piece
+    //idk return type
+    void promote();
 
 
     //REQUIRES: move is given in chess notation
@@ -57,7 +64,7 @@ int notation_converter(string pos, bool &takes, Value &value);
 int string_to_pos(string);
 
 //initializes basic board with all pieces on starting squares
-//we will assume we are playing 
+//we will assume we are playing as white for easier notation conversion
 Board::Board(){
     //probaably a better way to do this but im lazy
     Piece b_rook1 = Piece(ROOK, BLACK);
@@ -171,6 +178,15 @@ void Board::move_peice(string move){
     }
 
     turn++;
+}
+
+
+array<Piece> Board::get_board(){
+    return this->board;
+}
+
+vector<Piece> get_taken(){
+    return this->taken;
 }
 
 
