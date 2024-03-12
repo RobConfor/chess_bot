@@ -17,12 +17,13 @@ enum Color {
 
 class Piece {
     public:
+    static int it; //this is just gonnaflip everytime we make an empty square
 
     //empty square
     Piece(){
         //random color but not random
         this->value = EMPTY;
-        this->color = BLACK;
+        this->color = WHITE;
     }
 
     //pawn
@@ -37,9 +38,9 @@ class Piece {
         this->color = color;
 
         if(this->value == BISHOP || this->value == QUEEN || this->value == ROOK){
-            this->is_infinte = true;
+            this->is_infinite = true;
         } else {
-            this->is_infinte = false;
+            this->is_infinite = false;
         }
     }
 
@@ -54,12 +55,12 @@ class Piece {
     }
 
 
-    //might make a function or that describes a peices movement
+    //might make a function or var that describes a peices movement
     //this is in the 8x8 matrix of the board (but it is an array) 
         //white pawn = -8
+            //captures = -7 -9 
         //black pawn = +8
-            //capture white = -7 -9 
-            //capture black = +7 +9
+            //captures = +7 +9
         //bishop = +7 -7 or -9 +9 (infinetly along that diagonal)
         //rook = +1 -1 or +8 -8 (infinetly along diagonal)
         //knight = +15 -15 or +17 -17 or +6 -6 or +10 -10

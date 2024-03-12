@@ -1,4 +1,6 @@
 #include "Piece.cpp"
+#include <string>
+
 
 //this coesnt compile on its own since we didnt include libraries
 
@@ -18,6 +20,9 @@ class Board {
     //returns the peice at a spesific square in index notation
     Piece get_piece(int index);
 
+    //increments turn
+    void next_turn();
+
     //returns peice in given chess notation pos
     Piece get_piece(string pos);
 
@@ -28,7 +33,7 @@ class Board {
     void take_peice(string pos);
 
     //returns the board array
-    array<Piece> get_board();
+    array<Piece, 64> get_board();
 
     //returns taken pieces
     vector<Piece> get_taken();
@@ -36,6 +41,9 @@ class Board {
     //promotes a pawn to inputed piece
     //idk return type
     void promote();
+
+    //castles queenside or kingside 
+    void castles();
 
 
     //REQUIRES: move is given in chess notation
@@ -59,7 +67,7 @@ class Board {
 };
 
 //EFFECT: takes in chess notation as imput and returns a position in array
-int notation_converter(string pos, bool &takes, Value &value);
+int notation_converter(string pos, bool &takes, Value &value, bool& is_castles);
 
 int string_to_pos(string);
 
@@ -170,23 +178,47 @@ void Board::move_peice(string move){
     //not done yet
     bool takes = false;
     Value piece = PAWN;
+    bool is_castles = false;
 
-    int pos = notation_converter(move, takes, piece);
+    int pos = notation_converter(move, takes, piece, is_castles);
 
-    if(takes == true){
+    //we already castled
+    if(is_casltes){
+        return;
+    }
+
+    if(takes){
         take_peice(move);
     }
+
+
+    int piece = find_piece(pos, BLACK);
+
+    if(turn % 2 == 0){
+        piece = find_piece(pos, WHITE);
+    }
+
+
+    //I think this works?
+    Piece temp = board[piece];
+    //empty square
+    board[piece] = Piece();
+    board[move] = temp;
 
     turn++;
 }
 
 
-array<Piece> Board::get_board(){
+array<Piece, 64> Board::get_board(){
     return this->board;
 }
 
-vector<Piece> get_taken(){
+vector<Piece> Board::get_taken(){
     return this->taken;
+}
+
+void Board::next_turn(){
+    this->turn++;
 }
 
 
@@ -194,6 +226,7 @@ vector<Piece> get_taken(){
 //adds deleted peice to the taken vector
 void Board::take_peice(string pos){
     taken.push_back(this->board[string_to_pos(pos)]);
+
 }
 
 const char PIECE_NAMES[] = {
@@ -202,6 +235,54 @@ const char PIECE_NAMES[] = {
   'R',  // Rook
   'Q'  // Queen
 };
+
+//REQUIRES: no peices between king and rook and king has not moved
+//swaps them to correct squares 
+void Board::castles(string pos){
+    //white turn
+        //white king is at board[60]
+        //rooks are 63 and 56
+
+    if(turn % 2 == 0){
+
+        //check fro queenside or kingside
+        Piece temp_k = board[60];
+        Piece temp_r;
+        if(pos == "O-O"){
+
+
+            temp_r = board[63];-
+
+
+            return;
+        }
+
+        temp_r = board[56];
+
+
+        
+
+
+    } else {
+    //black turn 
+        //black kind at board[5]
+        //rooks are 0 and 7
+        Piece temp_k = board[5];
+        Piece temp_r;
+        if(pos == "O-O"){
+            
+            temp_r = board[0];
+            //castle
+            return;
+        }
+
+        temp_r = board[7];
+
+
+    }
+
+
+}
 
 //EFFECT: takes in chess notation as imput and interprets it
 //capital letters denotes a peice
@@ -212,7 +293,13 @@ const char PIECE_NAMES[] = {
     //  Nf3 knight 
     //  Kxe3 king takes pawn (we have to dedce which king, but we can if we know if its white or black turn)
     //  Qd5+ queen checks king
-int notation_converter(string pos, bool &takes, Value &value){
+int notation_converter(string pos, bool &takes, Value &value, bool& is_casltes){
+
+    //special case for castleing
+    if(pos == "O-O" || pos == "O-O-O"){
+        is_casltes = true;
+        return castles(pos);
+    }
 
     //is taking a piece
     //I dont think takes matters, only reason it does is we can keep track of which peices are deleted 
@@ -228,18 +315,12 @@ int notation_converter(string pos, bool &takes, Value &value){
     if(islower(pos[0])){
         //we know it is a pawn move
         value = PAWN;
-
         if(takes == false){
-
-            //this is not correct
-            //stoi removes all letters and leaves just numbers
             string new_pos = to_string(pos[0]) + pos[1];
             return string_to_pos(new_pos);
         }
-
         string new_pos = to_string(pos[2]) + pos[3];
         return string_to_pos(new_pos);
-
     }
 
     //have to checks other pieces
@@ -260,14 +341,24 @@ int notation_converter(string pos, bool &takes, Value &value){
     return 0;
 }
 
-//ghost erorrs i think idk
+//we cant tell who is white and who is black when printed
+
 void Board::to_string(){
+    cout << endl;
+
     for(int i = 0; i < 64; ++i){
-        cout << this->board[i] << " ";
+        if(board[i].get_color() == WHITE){
+            cout <<  "\x1b[30;47m"<< this->board[i] << " ";
+        } else {
+            cout <<  "\x1b[37;40m"<< this->board[i] << " ";
+        }
+       
         if((i + 1) % 8 == 0 && i != 0){
-            cout << '\n';
+            cout <<  "\x1b[0m"<< '\n';
         }
     }
+
+    cout << endl;
 
 }
 
@@ -306,6 +397,11 @@ int string_to_pos(string pos){
 
     int row = 0;
     int col = 0;
+
+    //idk what this was for...
+    if(){
+
+    }
 
     for(int i = 0; i < 8; ++i){
         if(GRID_POS[i] == pos[0]){
