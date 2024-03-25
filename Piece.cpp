@@ -37,6 +37,7 @@ class Piece {
         this->value = name;
         this->color = color;
 
+        //has inifntie movemnt (along a path)
         if(this->value == BISHOP || this->value == QUEEN || this->value == ROOK){
             this->is_infinite = true;
         } else {
